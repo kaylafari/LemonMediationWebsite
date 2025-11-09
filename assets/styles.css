@@ -1,0 +1,18 @@
+/* Base header: solid by default, not fixed */
+.site-header { position: relative; width: 100%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.08); z-index: 1000; }
+
+/* Home-only: make header fixed + allow transparent mode */
+.home .site-header { position: fixed; top: 0; left: 0; width: 100%; }
+.home .site-header.transparent { background: transparent; box-shadow: none; }
+.home .site-header.solid { background: rgba(255,255,255,.97); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+
+/* Home-only link/logo colors over the hero */
+.home .main-nav a { color: #fff; }
+.home .site-header.solid .main-nav a { color: #111827; }
+.home .logo img { filter: brightness(0) invert(1); }
+.home .site-header.solid .logo img { filter: none; }
+
+/* Adjust top spacing only on home (because header is fixed there) */
+.home main { padding-top: 90px; }
+
+.site-header.solid .nav-toggle { color:#111827 }
