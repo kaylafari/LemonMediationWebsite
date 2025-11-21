@@ -8,52 +8,207 @@
 <script defer src="assets/main.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* =============================
+     About page — tighter two-column
+     ============================= */
+  /* 
+    PAGE LAYOUT OVERVIEW
+    - The `.about-image-block .container.about-grid` rule removes global centering so this section can control its own margins.
+    - `.content-wrapper` creates the single left margin for the whole section (currently 1 inch). 
+      • Change ONLY `padding-left` to move the whole content column left/right (e.g., 0.75in or 96px).
+      • `max-width` limits line length—raise/lower to taste.
+    - The "Meet Nina" area is a 2-column CSS Grid:
+      • Left column = portrait box; right column = heading + paragraph.
+      • Adjust `grid-template-columns` to change column widths (e.g., `minmax(320px, 480px) 1fr`).
+      • Adjust `gap` for space between columns.
+    - The statue block is currently hidden with `.image-column { display:none; }`.
+    - All sizes are responsive—prefer relative units (rem/in) instead of fixed px where possible.
+  */
+  /* Override global container centering so this section can align from the true left edge. 
+     Leave width:100% and max-width:none; add internal padding only in `.content-wrapper`. */
+  .about .about-image-block .container.about-grid {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;    /* override global centering */
+    padding: 0;   /* remove any container padding */
+  }
+
+  /* Page banner alignment — match the 1-inch left margin */
+  .about .page-banner .container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding-left: 1in;   /* same left margin as content wrapper */
+    padding-right: 2rem;
+  }
+
+  /* SECTION LEFT MARGIN & WIDTH
+     - `padding-left: 1in` sets the exact left margin for "Our Story" and the grid below.
+     - Tweak this to change the single left guide (e.g., 0.8in, 96px, or 6rem).
+     - `max-width` caps text line length; increase to widen, decrease to narrow. */
+  .about .content-wrapper {
+    display: block;
+    margin: 0;
+    padding-left: 1in;   /* exact one-inch left margin */
+    padding-right: 2rem;
+    max-width: 1200px;
+  }
+
+  /* "Our Story" block (full width)
+     - No extra padding: it inherits the left margin from `.content-wrapper`. 
+     - Add `margin-bottom` here to increase spacing before the Nina grid if desired. */
+  .about .text-column {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Statue column (hidden)
+     - Re-enable by removing `display:none`.
+     - If shown, it will sit below this section unless you place it in the grid. */
+  .about .image-column { display: none; }
+
+  /* Statue image sizing (only applies if `.image-column` is shown) */
+  .about .angel-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    position: static;
+    margin-left: 0;
+  }
+
+  /* Statue column (hidden) */
+  .about .image-column { min-width: 0; }
+  
+  /* NINA SECTION — TWO-COLUMN GRID
+     - Left column width: `minmax(300px, 420px)`; raise max to make the photo larger (e.g., 480px).
+     - Right column is fluid (`1fr`).
+     - `gap` controls space between photo and text.
+     - `margin-top` controls space above this grid. */
+  .about .mediator-profile-inline {
+    display: grid;
+    grid-template-columns: minmax(320px, 320px) 1fr; /* left = photo box, right = text */
+    gap: 2rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+
+  /* Portrait image
+     - Fills its grid column (`width:100%`).
+     - `border-radius` rounds the corners; adjust for more/less rounding.
+     - Keep `object-fit:cover` for consistent crop when using fixed heights. */
+  .about .mediator-profile-inline .profile-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  /* Photo wrapper (non-floating)
+     - Holds the gray background "card" via ::before; keeps layout stable (no text wrapping around the silhouette). */
+  .photo-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Gray background panel behind portrait
+     - Adjust the "peeking" offset with `top` and `left`.
+     - Make the panel larger/smaller with the `calc(100% + …)` values.
+     - Change `background` for a different tone; tweak `box-shadow` for depth. */
+  .photo-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 50px;
+    left: -20px;
+    width: 300px;
+    height: 314px;
+    background: #d3d3d3;
+    border-radius: 12px;
+    z-index: -1;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+
+  /* Statue float — full viewport height on the right, text wraps around its silhouette */
+  .about .statue-image {
+    float: right;
+    display: block;
+    height: 130vh;           /* spans the full screen vertically */
+    width: auto;             /* maintain aspect ratio */
+    margin: 0 0 1rem 2rem;   /* space on the left for text */
+    shape-outside: url("assets/angel-statue.png");
+    -webkit-shape-outside: url("assets/angel-statue.png");
+    shape-image-threshold: 0.5;
+    -webkit-shape-image-threshold: 0.5;
+    shape-margin: 16px;
+    -webkit-shape-margin: 16px;
+    position: relative;      /* allow overlap above previous section */
+    z-index: 2;              /* ensure statue sits above the banner background */
+    margin-top: -200px;      /* pull upward; tweak this value to control how much it overlaps */
+  }
+  /* Clear the float at the end of the full-width container so later sections don't overlap */
+  .about .about-image-block .container.about-grid::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  /* Responsive tweaks — stack content on narrow screens; adjust breakpoint as needed. */
+  @media (max-width: 900px) {
+    .about .about-image-block .container.about-grid { grid-template-columns: 1fr; }
+    .about .image-column { margin-top: 0.75rem; }
+    .about .statue-image {
+      float: none;
+      height: auto;
+      width: 100%;
+      margin: 1rem 0;
+      shape-outside: none;
+      -webkit-shape-outside: none;
+    }
+    .mediator-profile-inline .profile-text p { margin-right: 0; }
+  }
+
+  /* "Meet Nina" heading
+     - Serif font for contrast; increase `font-size` to emphasize. */
+  .mediator-profile-inline h3 {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  /* Allow the paragraph under "Meet Nina" to overlap slightly into the statue area */
+  .mediator-profile-inline .profile-text p {
+    position: relative;   /* enables z-index */
+    z-index: 3;           /* above the statue (statue is z-index:2) */
+    margin-right: -10rem;  /* push the paragraph a bit into the right float area */
+  }
+
+  /* "Our Story" heading
+     - Matches serif style; adjust size/weight to change prominence. */
+  .about .text-column h2 {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    
+  }
+</style>
 </head>
 
 <body class="about">
 
   <!-- Header -->
   <header class="site-header">
-    <div class="top-bar">
-      <div class="container">
-        <span class="contact-phone">(555) 123-4567</span>
-        <span class="contact-sep">|</span>
-        <a class="contact-email" href="mailto:info@lemonmediation.example">info@lemonmediation.example</a>
-      </div>
-    </div>
     <div class="nav-bar">
       <div class="container nav-container">
-        <a class="logo" href="index.html"><img src="assets/logo.png" alt="Lemon Mediation" /></a>
+        <a class="logo" href="index.html">
+          <img src="assets/logo.png" alt="Lemon Mediation" />
+        </a>
         <nav class="main-nav" aria-label="Main menu">
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li class="has-dropdown">
-              <a href="services/index.html">Services</a>
-              <ul class="dropdown">
-                <li><a href="services/lemon-law.html">Lemon Law Mediation</a></li>
-                <li><a href="services/business-commercial.html">Business & Commercial</a></li>
-                <li><a href="services/employment.html">Employment</a></li>
-                <li><a href="services/personal-injury.html">Personal Injury</a></li>
-                <li><a href="services/debt-collection.html">Debt Collection</a></li>
-                <li><a href="services/real-estate.html">Real Estate</a></li>
-                <li><a href="services/ip.html">Trademark & Copyright</a></li>
-                <li><a href="services/wage-hour.html">Wage & Hour</a></li>
-              </ul>
-            </li>
-            <li class="has-dropdown">
-              <a href="faqs/index.html">FAQs</a>
-              <ul class="dropdown">
-                <li><a href="faqs/misconceptions.html">Common Misconceptions</a></li>
-                <li><a href="faqs/tips-for-attorneys.html">Tips for Attorneys</a></li>
-              </ul>
-            </li>
-            <li><a href="blog/index.html">Blog</a></li>
-            <li class="has-dropdown">
-              <a href="articles/index.html">Articles</a>
-              <ul class="dropdown"><li><a href="articles/webinars.html">Webinars</a></li></ul>
-            </li>
             <li><a href="about.html" class="active">About</a></li>
-            <li><a href="bio.html">Bio</a></li>
             <li><a href="calendar.html">Calendar</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
@@ -67,60 +222,86 @@
   <section class="page-banner">
     <div class="container">
       <h1>About Us</h1>
-      <p class="subtitle">Neutral. Practical. Resolution-focused.</p>
     </div>
   </section>
 
-  <!-- Combined Story + Profile Section -->
+  <!-- Main content: Our Story + Meet Nina (statue layout) -->
   <section class="about-image-block">
-    <div class="text-column">
-      <h2>Our Story</h2>
-      <p>Lemon Mediation is guided by balance, fairness, and clarity. Our mission is to help parties resolve disputes with integrity, neutrality, and respect.</p>
-      <p>Just as art captures harmony between light and shadow, mediation brings balance between differing perspectives.</p>
+    <!-- Content wrapper: provides the single left margin (1 inch) and overall width -->
+    <div class="container about-grid">
+      <img src="assets/angel-statue.png" alt="Angel statue" class="statue-image">
+      <div class="about content-wrapper">
+        <!-- Our Story -->
+        <div class="text-column">
+          <h2>Our Story</h2>
+          <p>Every great solution begins with understanding. Our company was founded on the belief that with open communication and empathy we can turn conflict into resolution. Our focus is about providing an alternative path to create trust, respect, and peace of mind to all clients. We aim to reach fair and lasting agreements and are dedicated to transform disagreements into breakthroughs.</p>
 
-      <div class="mediator-profile-inline">
-        <div class="profile-photo"></div>
-        <div class="profile-text">
-          <h3>Meet Nina</h3>
-          <p><strong>Nina</strong> is a dedicated and empathetic mediator specializing in Lemon Law cases, guiding clients through complex disputes with clarity and compassion.</p>
-          <p>With a foundation built through formal mediation training, mentorship under experienced professionals, and specialized webinars, Nina blends education with real-world insight to bring a thoughtful, balanced perspective to every session.</p>
-          <p>Adaptable, curious, and genuinely invested in helping others, Nina approaches each case with patience and an open mind. She believes that effective mediation isn’t just about resolving disagreements—it’s about understanding the people behind them. By listening deeply and asking the right questions, she creates a space where all voices are heard and respected, fostering meaningful dialogue that leads to practical, lasting resolutions.</p>
-          <p>Drawing on both study and hands-on experience, Nina mediates with a balance of empathy and objectivity, helping clients reach fair, efficient outcomes. Her approach emphasizes collaboration over confrontation, encouraging parties to find common goals and work together toward resolution.</p>
-          <p>At the heart of Nina’s work is a genuine passion for bringing people together. Whether navigating complex legal issues or simply helping clients feel understood and empowered, she finds purpose in helping others move forward with confidence, respect, and peace of mind.</p>
+          <!-- Nina section grid -->
+          <div class="mediator-profile-inline">
+            <!-- Left column: portrait container (gray background uses ::before) -->
+            <div class="photo-wrapper">
+              <img src="assets/nina-profile.png" alt="Photo of mediator Nina" class="profile-photo">
+            </div>
+            <!-- Right column: "Meet Nina" -->
+            <div class="profile-text">
+              <h3>Meet Nina</h3>
+              <p>Nina is a dedicated and empathetic mediator specializing in Lemon Law cases, helping clients navigate complex disputes with clarity and compassion. Through formal mediation training, shadowing experienced professionals, and attending specialized webinars, she blends education and real-world observation to bring a balanced, thoughtful approach to every session. Adaptable, curious, and deeply invested in helping others, Nina listens attentively, asks insightful questions, and creates a space where all voices are heard and respected. Drawing on her studies and hands-on experience, she mediates with empathy and objectivity, emphasizing collaboration to guide clients toward fair and lasting resolutions while empowering them to move forward with confidence, respect, and peace of mind.</p>
+            </div>          
+          </div>
+        </div>
+
+        <!-- Kayla section grid -->
+        <div class="mediator-profile-inline">
+          <!-- Left column: portrait container (gray background uses ::before) -->
+          <div class="photo-wrapper">
+            <img src="assets/kayla-profile.png" alt="Photo of mediator Kayla" class="profile-photo" style="margin-left:-45px; margin-top:-24px; width:105%; max-width:none;">
+          </div>
+
+          <!-- Right column: "Meet Kayla" -->
+          <div class="profile-text">
+            <h3>Meet Kayla</h3>
+            <p>
+              Kayla brings warmth, clarity, and a calm problem-solving presence to every mediation she leads.
+              With a background in communication and conflict-resolution coaching, she approaches each case
+              with curiosity, fairness, and an ability to help clients feel grounded even in stressful moments.
+            </p>
+            <p>
+              Whether facilitating delicate conversations or guiding parties toward practical solutions, Kayla’s
+              focus remains the same: ensuring every person feels heard, respected, and supported throughout
+              the process.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- Statue image block (currently hidden via CSS: .image-column { display:none }) -->
+        <div class="image-column">
+          <img src="assets/angel-statue.png" alt="Angel statue" class="angel-image">
         </div>
       </div>
     </div>
 
-    <div class="image-column">
-      <img src="assets/angel-statue.png" alt="Angel statue" class="angel-image">
-    </div>
+    <div style="height: 4rem;"></div>
   </section>
+
+  
 
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <h3>Contact</h3>
-        <p>445 S. Figueroa Street<br>Suite 2388<br>Los Angeles, CA 90071</p>
-        <p><strong>Phone:</strong> (555) 123-4567<br>
-        <strong>Email:</strong> <a href="mailto:info@lemonmediation.example">info@lemonmediation.example</a></p>
+        <h3>Contact Us</h3>
+          <strong>Email:</strong>
+          <a href="mailto:info@calmediationgroup.com">info@calmediationgroup.com</a>
+        </p>
       </div>
       <div>
         <h3>Quick Links</h3>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="services/index.html">Services</a></li>
-          <li><a href="faqs/index.html">FAQs</a></li>
-          <li><a href="articles/index.html">Articles</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
           <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Resources</h3>
-        <ul>
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
-          <li><a href="disclaimer.html">Disclaimer</a></li>
         </ul>
       </div>
     </div>
