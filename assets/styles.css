@@ -48,10 +48,10 @@
   }
   
   .logo img {
-    height: 50px;
+    height: 42px;
     transition: filter 0.4s;
-    margin-left: -98px;
-    margin-top: 5px;
+    margin-left: 0;
+    margin-top: 0;
   }
   .home .logo img {
     filter: brightness(0) invert(1);
@@ -662,6 +662,16 @@ body.menu-open {
 
 .mobile-menu-overlay a:hover {
   opacity: 0.6;
+}
+
+/* MOBILE LOGO FIX */
+@media (max-width: 600px) {
+  .logo img {
+    height: 28px !important;
+  }
+  .nav-container {
+    padding: 0.4rem 0 !important;
+  }
 }
 
 /* Hide desktop nav on mobile */
