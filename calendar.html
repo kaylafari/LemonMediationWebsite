@@ -56,6 +56,51 @@
       background: #fff;
       color: #0ea5e9;
     }
+
+    .coming-soon-wrapper {
+      padding: 3rem 1rem 4rem;
+      text-align: center;
+    }
+
+    .coming-soon-message {
+      background: #ffffff;
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .coming-soon-message h2 {
+      font-size: 1.9rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .coming-soon-message p {
+      font-size: 1.05rem;
+      margin: 0 0 1.5rem;
+      color: #475569;
+    }
+
+    @media (max-width: 600px) {
+      .coming-soon-message {
+        padding: 2rem 1.5rem;
+      }
+
+      .coming-soon-message h2 {
+        font-size: 1.6rem;
+      }
+
+      .coming-soon-message p {
+        font-size: 1rem;
+      }
+
+      .coming-soon-message .cta {
+        width: 100%;
+        max-width: 260px;
+      }
+    }
   </style>
 </head>
 
@@ -89,7 +134,8 @@
 
   <main class="container coming-soon-wrapper">
     <div class="coming-soon-message">
-      <h2> We're currently working on this, but you can still reach us. Click the button below to schedule time to talk!</p>
+      <h2>We're currently working on this, but you can still reach us.</h2>
+      <p>Click the button below to schedule time to talk!</p>
       <a href="contact.html" class="cta">Contact Us</a>
     </div>
   </main>
