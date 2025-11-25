@@ -601,3 +601,72 @@
     padding: 1.2rem 0.8rem;
   }
 }
+
+/* ===============================
+   FULL-SCREEN MOBILE MENU (STYLE C)
+   =============================== */
+
+body.menu-open {
+  overflow: hidden; /* prevent background scrolling */
+}
+
+/* Overlay container */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(6px);
+  display: none;
+  z-index: 2000;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+/* show overlay */
+.mobile-menu-overlay.open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Close button */
+.mobile-menu-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0b2a4a;
+}
+
+/* Menu links */
+.mobile-menu-overlay nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.mobile-menu-overlay a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: #0b2a4a;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay a:hover {
+  opacity: 0.6;
+}
+
+/* Hide desktop nav on mobile */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none !important;
+  }
+}

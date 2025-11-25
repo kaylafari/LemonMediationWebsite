@@ -67,19 +67,10 @@
   /* Statue column (hidden)
      - Re-enable by removing `display:none`.
      - If shown, it will sit below this section unless you place it in the grid. */
-  .about .image-column { display: none; }
 
   /* Statue image sizing (only applies if `.image-column` is shown) */
-  .about .angel-image {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    position: static;
-    margin-left: 0;
-  }
 
   /* Statue column (hidden) */
-  .about .image-column { min-width: 0; }
   
   /* NINA SECTION — TWO-COLUMN GRID
      - Left column width: `minmax(300px, 420px)`; raise max to make the photo larger (e.g., 480px).
@@ -132,22 +123,6 @@
   }
 
   /* Statue float — full viewport height on the right, text wraps around its silhouette */
-  .about .statue-image {
-    float: right;
-    display: block;
-    height: 130vh;           /* spans the full screen vertically */
-    width: auto;             /* maintain aspect ratio */
-    margin: 0 0 1rem 2rem;   /* space on the left for text */
-    shape-outside: url("assets/angel-statue.png");
-    -webkit-shape-outside: url("assets/angel-statue.png");
-    shape-image-threshold: 0.5;
-    -webkit-shape-image-threshold: 0.5;
-    shape-margin: 16px;
-    -webkit-shape-margin: 16px;
-    position: relative;      /* allow overlap above previous section */
-    z-index: 2;              /* ensure statue sits above the banner background */
-    margin-top: -200px;      /* pull upward; tweak this value to control how much it overlaps */
-  }
   /* Clear the float at the end of the full-width container so later sections don't overlap */
   .about .about-image-block .container.about-grid::after {
     content: "";
@@ -233,9 +208,6 @@
       font-size: 1.8rem;
     }
 
-    .about .statue-image {
-      display: none; /* hide statue on mobile for readability */
-    }
   }
 
   @media (max-width: 600px) {
@@ -300,7 +272,6 @@
   <section class="about-image-block">
     <!-- Content wrapper: provides the single left margin (1 inch) and overall width -->
     <div class="container about-grid">
-      <img src="assets/angel-statue.png" alt="Angel statue" class="statue-image">
       <div class="about content-wrapper">
         <!-- Our Story -->
         <div class="text-column">
@@ -346,10 +317,6 @@
         </div>
 
 
-        <!-- Statue image block (currently hidden via CSS: .image-column { display:none }) -->
-        <div class="image-column">
-          <img src="assets/angel-statue.png" alt="Angel statue" class="angel-image">
-        </div>
       </div>
     </div>
 

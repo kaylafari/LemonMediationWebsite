@@ -24,10 +24,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Mobile nav toggle
-  if (toggle && nav) {
+
+  // ==============================
+  // FULL-SCREEN MOBILE MENU
+  // ==============================
+  const mobileMenu = document.querySelector('.mobile-menu-overlay');
+  const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+  if (toggle && mobileMenu) {
     toggle.addEventListener('click', () => {
-      nav.classList.toggle('show');
+      mobileMenu.classList.add('open');
+      document.body.classList.add('menu-open');
+    });
+  }
+
+  if (mobileMenuClose && mobileMenu) {
+    mobileMenuClose.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    });
+  }
+
+  // Close menu when clicking links
+  if (mobileMenu) {
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        document.body.classList.remove('menu-open');
+      });
     });
   }
 
