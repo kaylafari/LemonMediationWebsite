@@ -1,13 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendar — Lemon Mediation</title>
   <link rel="stylesheet" href="assets/styles.css">
   <script defer src="assets/main.js"></script>
+  <style>
+    /* Force banner styling locally */
+    .page-banner {
+      background: linear-gradient(180deg, #0b2a4a, #09223c);
+      color: #fff;
+      padding: clamp(2.5rem, 5vw, 4.5rem) 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-top: 90px; /* space for fixed header */
+    }
+
+    .page-banner .banner-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+
+    .page-banner h1 {
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      font-size: clamp(2rem, 3.2vw + 1rem, 3.5rem);
+      line-height: 1.1;
+    }
+
+    .page-banner .subtitle {
+      margin-top: 0.5rem;
+      opacity: 0.9;
+      font-size: clamp(1rem, 0.8vw + 0.7rem, 1.25rem);
+    }
+
+    .coming-soon-message .cta {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid #0ea5e9;
+      border-radius: 8px;
+      background: #0ea5e9;
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .coming-soon-message .cta:hover {
+      background: #fff;
+      color: #0ea5e9;
+    }
+  </style>
 </head>
-<body>
+
+<body class="calendar">
   <header class="site-header">
     <div class="nav-bar">
       <div class="container nav-container">
@@ -27,20 +79,26 @@
     </div>
   </header>
 
-  <main class="container">
-    <h2>Scheduling</h2>
-    <p>Please propose 2–3 dates that work for all parties, or email us. Online scheduling can be added later via Calendly or similar.</p>
-    <table class="table">
-      <tr><th>Days</th><th>Availability</th></tr>
-      <tr><td>Mon–Thu</td><td>9:00am – 5:00pm</td></tr>
-      <tr><td>Fri</td><td>9:00am – 2:00pm</td></tr>
-    </table>
+  <section class="page-banner">
+    <div class="banner-inner">
+      <h1>Scheduling</h1>
+      <p class="subtitle">Online booking is coming soon!</p>
+    </div>
+  </section>
+
+
+  <main class="container coming-soon-wrapper">
+    <div class="coming-soon-message">
+      <h2> We're currently working on this, but you can still reach us. Click the button below to schedule time to talk!</p>
+      <a href="contact.html" class="cta">Contact Us</a>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
         <h3>Contact Us</h3>
+        <p>
           <strong>Email:</strong>
           <a href="mailto:info@calmediationgroup.com">info@calmediationgroup.com</a>
         </p>
@@ -56,7 +114,7 @@
       </div>
     </div>
     <div class="container copyright">
-      © <span data-year></span> Lemon Mediation. All rights reserved.
+      © <span data-year></span> Cal Mediation. All rights reserved.
     </div>
   </footer>
 </body>
