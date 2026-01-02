@@ -127,25 +127,38 @@
   </p>
 
   <form class="contact-form"
-        onsubmit="event.preventDefault(); document.getElementById('success-message').style.display='block';">
+        action="https://formspree.io/f/info@calmediationgroup.com"
+        method="POST">
 
     <label>
       Name
-      <input type="text" required>
+      <input type="text" name="name" required>
     </label>
 
     <label>
       Email
-      <input type="email" required>
+      <input type="email" name="email" required>
     </label>
 
     <label>
       Message
-      <textarea rows="5" required></textarea>
+      <textarea rows="5" name="message" required></textarea>
     </label>
+
+    <input type="hidden" name="_subject" value="New Contact Form Submission">
+    <input type="hidden" name="_next" value="https://calmediationgroup.com/contact.html?submitted=true">
 
     <button class="cta" type="submit">Send Message</button>
   </form>
+
+  <script>
+    // Show success message if redirected back after submission
+    if (window.location.search.includes('submitted=true')) {
+      document.getElementById('success-message').style.display = 'block';
+      // Clean up URL
+      history.replaceState(null, '', window.location.pathname);
+    }
+  </script>
 
 </main>
 
