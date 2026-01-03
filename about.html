@@ -123,6 +123,22 @@
   }
 
   /* Statue float — full viewport height on the right, text wraps around its silhouette */
+  .about .statue-image {
+    float: right;
+    display: block;
+    height: 130vh;           /* spans the full screen vertically */
+    width: auto;             /* maintain aspect ratio */
+    margin: 0 0 1rem 2rem;   /* space on the left for text */
+    shape-outside: url("assets/angel-statue.png");
+    -webkit-shape-outside: url("assets/angel-statue.png");
+    shape-image-threshold: 0.5;
+    -webkit-shape-image-threshold: 0.5;
+    shape-margin: 16px;
+    -webkit-shape-margin: 16px;
+    position: relative;      /* allow overlap above previous section */
+    z-index: 2;              /* ensure statue sits above the banner background */
+    margin-top: -200px;      /* pull upward; tweak this value to control how much it overlaps */
+  }
   /* Clear the float at the end of the full-width container so later sections don't overlap */
   .about .about-image-block .container.about-grid::after {
     content: "";
@@ -207,6 +223,9 @@
       font-size: 1.8rem;
     }
 
+    .about .statue-image {
+      display: none; /* hide statue on mobile for readability */
+    }
   }
 
   @media (max-width: 600px) {
@@ -280,6 +299,7 @@
   <section class="about-image-block">
     <!-- Content wrapper: provides the single left margin (1 inch) and overall width -->
     <div class="container about-grid">
+      <img src="assets/angel-statue.png" alt="Angel statue" class="statue-image">
       <div class="about content-wrapper">
         <!-- Our Story -->
         <div class="text-column">
@@ -320,6 +340,44 @@
               Whether facilitating delicate conversations or guiding parties toward practical solutions, Kayla’s
               focus remains the same: ensuring every person feels heard, respected, and supported throughout
               the process.
+            </p>
+          </div>
+        </div>
+
+        <!-- Andrew section grid -->
+        <div class="mediator-profile-inline">
+          <!-- Left column: portrait container (gray background uses ::before) -->
+          <div class="photo-wrapper">
+            <img src="assets/blank-profile.png" alt="Placeholder photo for Andrew" class="profile-photo">
+          </div>
+
+          <!-- Right column: "Coming Soon: Andrew" -->
+          <div class="profile-text">
+            <h3>Coming Soon: Andrew</h3>
+            <p>
+              Andrew brings a warm, approachable energy to every interaction. Known for his friendly demeanor and genuine interest in people, he thrives on building connections both inside and outside of the office.
+            </p>
+            <p>
+              When he's not facilitating productive conversations, you'll find him enjoying time with family, catching a game, or exploring new ways to make conflict resolution feel accessible and stress-free for everyone involved.
+            </p>
+          </div>
+        </div>
+
+        <!-- Jacob section grid -->
+        <div class="mediator-profile-inline">
+          <!-- Left column: portrait container (gray background uses ::before) -->
+          <div class="photo-wrapper">
+            <img src="assets/blank-profile.png" alt="Placeholder photo for Jacob" class="profile-photo">
+          </div>
+
+          <!-- Right column: "Coming Soon: Jacob" -->
+          <div class="profile-text">
+            <h3>Coming Soon: Jacob</h3>
+            <p>
+              Jacob draws on his background in human behavior and psychology to bring a thoughtful, empathetic perspective to mediation. His previous volunteer work in community outreach has shaped his commitment to helping others navigate difficult conversations.
+            </p>
+            <p>
+              Patient and perceptive, Jacob creates space for open dialogue, guiding clients toward resolutions that honor everyone's needs.
             </p>
           </div>
         </div>
