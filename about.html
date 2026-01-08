@@ -145,6 +145,16 @@
     display: block;
     clear: both;
   }
+  /* Hide statue at larger breakpoint to prevent text overlap when resizing */
+  @media (max-width: 1200px) {
+    .about .statue-image {
+      display: none;
+    }
+    .mediator-profile-inline .profile-text p {
+      margin-right: 0;
+    }
+  }
+
   /* Responsive tweaks — stack content on narrow screens; adjust breakpoint as needed. */
   @media (max-width: 900px) {
     .about .about-image-block .container.about-grid { grid-template-columns: 1fr; }
@@ -156,6 +166,7 @@
       margin: 1rem 0;
       shape-outside: none;
       -webkit-shape-outside: none;
+      display: none;
     }
     .mediator-profile-inline .profile-text p { margin-right: 0; }
   }
