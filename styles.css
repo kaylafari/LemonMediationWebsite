@@ -151,7 +151,7 @@
   
   /* ---------- Hero (Homepage Only) ---------- */
   .hero {
-    background: url('la-skyline.jpg') center/cover no-repeat fixed;
+    background: url('assets/la-skyline.jpg') center/cover no-repeat fixed;
     height: 100vh;
     display: flex;
     align-items: center;
