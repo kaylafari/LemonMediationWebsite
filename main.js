@@ -74,4 +74,64 @@ document.addEventListener('DOMContentLoaded', () => {
       tile.style.filter = 'brightness(1)';
     });
   });
+
+  // ==============================
+  // STATUE SIZING BASED ON ASPECT RATIO
+  // ==============================
+  // The statue can overlap text at certain aspect ratios (wide but short viewports).
+  // This formula dynamically sizes the statue based on the viewport aspect ratio.
+  // 
+  // Key thresholds:
+  // - MIN_WIDTH: Below this width (px), statue is hidden entirely
+  // - MAX_ASPECT_RATIO: Above this ratio (width/height), statue starts shrinking
+  // - IDEAL_ASPECT_RATIO: At or below this ratio, statue is at full size
+  // 
+  // The formula interpolates the statue height between these thresholds.
+
+  const statue = document.querySelector('.statue-image');
+  
+  if (statue) {
+    const MIN_WIDTH = 1200;           // Hide statue below this width
+    const IDEAL_ASPECT_RATIO = 1.2;   // Full size at 4:3 or narrower (width/height)
+    const MAX_ASPECT_RATIO = 2.5;     // Minimum size at ultra-wide (21:9 or wider)
+    const BASE_HEIGHT_VH = 130;       // Full statue height in vh
+    const MIN_HEIGHT_VH = 70;         // Minimum statue height in vh when shrinking
+
+    function updateStatueSize() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const aspectRatio = vw / vh;
+
+      // Hide statue below minimum width
+      if (vw < MIN_WIDTH) {
+        statue.style.display = 'none';
+        return;
+      }
+
+      // Show statue
+      statue.style.display = 'block';
+
+      // Calculate height based on aspect ratio
+      // - At IDEAL_ASPECT_RATIO or below: use BASE_HEIGHT_VH
+      // - At MAX_ASPECT_RATIO or above: use MIN_HEIGHT_VH
+      // - In between: linear interpolation
+      let statueHeight;
+
+      if (aspectRatio <= IDEAL_ASPECT_RATIO) {
+        statueHeight = BASE_HEIGHT_VH;
+      } else if (aspectRatio >= MAX_ASPECT_RATIO) {
+        statueHeight = MIN_HEIGHT_VH;
+      } else {
+        // Linear interpolation between ideal and max aspect ratios
+        const t = (aspectRatio - IDEAL_ASPECT_RATIO) / (MAX_ASPECT_RATIO - IDEAL_ASPECT_RATIO);
+        statueHeight = BASE_HEIGHT_VH - (t * (BASE_HEIGHT_VH - MIN_HEIGHT_VH));
+      }
+
+      statue.style.height = `${statueHeight}vh`;
+    }
+
+    // Run on load and resize
+    updateStatueSize();
+    window.addEventListener('resize', updateStatueSize);
+  }
 });

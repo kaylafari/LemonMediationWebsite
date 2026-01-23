@@ -122,11 +122,16 @@
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   }
 
-  /* Statue float — full viewport height on the right, text wraps around its silhouette */
+  /* Statue float — height is controlled dynamically by JavaScript based on aspect ratio.
+     See main.js for the sizing formula:
+     - Hides below 1200px width
+     - Full size (130vh) at aspect ratio ≤ 1.2 (portrait/square-ish)
+     - Shrinks down to 70vh at aspect ratio ≥ 2.5 (ultra-wide)
+     - Linear interpolation in between */
   .about .statue-image {
     float: right;
     display: block;
-    height: 130vh;           /* spans the full screen vertically */
+    height: 130vh;           /* fallback; overridden by JS */
     width: auto;             /* maintain aspect ratio */
     margin: 0 0 1rem 2rem;   /* space on the left for text */
     shape-outside: url("assets/angel-statue.png");
@@ -138,6 +143,8 @@
     position: relative;      /* allow overlap above previous section */
     z-index: 2;              /* ensure statue sits above the banner background */
     margin-top: -200px;      /* pull upward; tweak this value to control how much it overlaps */
+    /* Smooth transition when resizing */
+    transition: height 0.3s ease-out;
   }
   /* Clear the float at the end of the full-width container so later sections don't overlap */
   .about .about-image-block .container.about-grid::after {
@@ -145,10 +152,10 @@
     display: block;
     clear: both;
   }
-  /* Hide statue at larger breakpoint to prevent text overlap when resizing */
+  /* CSS fallback: hide statue below 1200px (JS also handles this, but this is a safety net) */
   @media (max-width: 1200px) {
     .about .statue-image {
-      display: none;
+      display: none !important;
     }
     .mediator-profile-inline .profile-text p {
       margin-right: 0;
